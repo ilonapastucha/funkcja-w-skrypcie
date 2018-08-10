@@ -1,97 +1,82 @@
 "use strict";
 (function(){
 	var enter = function(){
-		var result = '<br><br>';
-		return result;
+		return '<br><br>';
 	};
 
-	var multipl = 1.8;
-	var inc = 32;
 	var calcToF = function(temp){
-		var result = 'Your temperature in Celsius is '+temp+' in Fahrenheit is '+(temp * multipl + inc)+ '!';
-		return result;
+		return 'Your temperature in Celsius is '+temp+' in Fahrenheit is '+(temp *1.8 + 32)+ '!';
+	};
+
+	var seasonFromTemp = function(temp) {
+		if (temp <=5) {
+			return 'witer';
+		} else if (temp >5 && temp <= 15){
+			return 'autumn';
+		} else if (temp >15) {
+			return 'summer';
+		}
 	};
 
 	var waterState = function(temp){
 		if (temp <= 0) {
-			var result = 'State of water concentration: ice.';
+			return 'State of water concentration: ice.';
 		} else if (temp < 100) {
-			var result = 'State of water concentration: liquid.';
+			return 'State of water concentration: liquid.';
 		} else if (temp >= 100) {
-			var result = 'State of water concentration: gas.';
+			return 'State of water concentration: gas.';
 		}
-		return result;
 	};
 
-	var divide = 1.8;
-	var subtr = 32;
-	var calcToF = function(temp){
-		var result = 'Your temperature in Fahrenheit is '+temp+' in Celsius is '+((temp - subtr)/ divide )+ '!';
-		return result;
+	var calcToC = function(temp){
+		return 'Your temperature in Fahrenheit is '+temp+' in Celsius is '+((temp - 32)/1.8)+ '!';
 	};
 
-	var output = document.getElementById('greeter-output');
+	var calcToCFloat = function(temp){
+		return ((temp - 32)/1.8);
+	};
 
-	output.innerHTML = 'Click the button to convert!' + enter() + output.innerHTML; 
+	var isProperlyTemperature = function(temp) {
+		return (isNaN(parseFloat(temp)) || temp === '' || temp == null) ? true : false;
+	};
 
-	var button = document.getElementById('greeter-button');
+	var celciusConvertionOutput = document.getElementById('greeter-output');
 
-	var temperature;
+	celciusConvertionOutput.innerHTML = 'Click the button to temperature!' + enter() + celciusConvertionOutput.innerHTML; 
+
+	var celciusConvertionButton = document.getElementById('greeter-button');
+
+	var fahrenheitConvertionButton= document.getElementById('green-button');
 
 
-
-	var button2= document.getElementById('green-button');
-
-	var convert; 
-
-	var writer = document.getElementById('green-output');
-	writer.innerHTML = 'Click the button to convert!' + enter() + writer.innerHTML;
+	var fahrenheitConvertionOutput = document.getElementById('green-output');
+	fahrenheitConvertionOutput.innerHTML = 'Click the button to temperature!' + enter() + fahrenheitConvertionOutput.innerHTML;
 
 	
 
-	button.addEventListener('click', function(){
-		temperature = window.prompt('What is the temperature in Celsius?');
-		output.innerHTML ='';	
+	celciusConvertionButton.addEventListener('click', function(){
+		var temperature = window.prompt('What is the temperature in Celsius?');
+		celciusConvertionOutput.innerHTML ='';	
 
-		if ( isNaN(temperature) || temperature === '' || temperature == null || temperature === NaN) {
-			output.innerHTML = 'No value entered!' + enter() + output.innerHTML;
+		if ( isProperlyTemperature(temperature)) {
+			celciusConvertionOutput.innerHTML = 'No value entered!' + enter() + celciusConvertionOutput.innerHTML;
 		}
 		else {
-			output.innerHTML = waterState(temperature) + enter() + output.innerHTML;
-			if (temperature <= 5) {
-				output.innerHTML = 'At this temperature we have winter.' + enter() + output.innerHTML;
-			} else if (temperature > 5 && temperature <= 15) {
-				output.innerHTML = 'At this temperature we have autumn.' + enter() + output.innerHTML;
-			} else if (temperature > 15) {
-				output.innerHTML = 'At this temperature we have summer' + enter() + output.innerHTML;
-			}
-			output.innerHTML = calcToF(temperature) + enter() + output.innerHTML; 
+			temperature = parseFloat(temperature);
+			celciusConvertionOutput.innerHTML = waterState(temperature) + enter() + 'At this temperature we have ' + seasonFromTemp(temperature) + '.' + enter() + calcToF(temperature) + enter() + celciusConvertionOutput.innerHTML;
 		}
 	}); 
 
-	button2.addEventListener('click', function(){
-		convert = window.prompt('What is the temperature in Fahrenheit?');
-		writer.innerHTML = '';
+	fahrenheitConvertionButton.addEventListener('click', function(){
+		var temperature = window.prompt('What is the temperature in Fahrenheit?');
+		fahrenheitConvertionOutput.innerHTML = '';
 
-		if (isNaN(convert) || convert === '' || convert == null || convert == NaN){
-		writer.innerHTML = 'No value entered!' + enter() + writer.innerHTML;
+		if ( isProperlyTemperature(temperature)){
+		fahrenheitConvertionOutput.innerHTML = 'No value entered!' + enter() + fahrenheitConvertionOutput.innerHTML;
 		}
 		else {
-			if (convert <= 32) {
-				writer.innerHTML = 'State of water concentration: ice.' + enter() + writer.innerHTML;
-			} else if (convert < 212) {
-				writer.innerHTML = 'State of water concentration: liquid.' + enter() + writer.innerHTML;
-			} else if (convert >= 212) {
-				writer.innerHTML = 'State of water concentration: gas.' + enter() + writer.innerHTML;
-			}
-			if (convert <= 41) {
-				writer.innerHTML = 'At this temperature we have winter.' + enter() + writer.innerHTML;
-			} else if (convert >41 && convert <=59) {
-				writer.innerHTML = 'At this temperature we have autumn.' + enter() + writer.innerHTML;
-			} else if (convert > 59) {
-				writer.innerHTML = 'At this temperature we have summer' + enter() + writer.innerHTML;
-			}
-			writer.innerHTML = calcToF(convert) + enter() + writer.innerHTML;
+			var tempInC = calcToCFloat(parseFloat(temperature));
+			fahrenheitConvertionOutput.innerHTML = waterStategi(tempInC) + enter() + 'At this temperature we have ' + seasonFromTemp(tempInC) + '.' + enter() + calcToC(temperature) + enter() + fahrenheitConvertionOutput.innerHTML;
 		}
 	}); 
 })();
