@@ -5,7 +5,7 @@
 	};
 
 	var calcToF = function(temp){
-		return 'Your temperature in Celsius is '+temp+' in Fahrenheit is '+(temp *1.8 + 32)+ '!';
+		return (temp *1.8 + 32);
 	};
 
 	var seasonFromTemp = function(temp) {
@@ -29,8 +29,9 @@
 	};
 
 	var calcToC = function(temp){
-		return 'Your temperature in Fahrenheit is '+temp+' in Celsius is '+((temp - 32)/1.8)+ '!';
+		return ((temp - 32)/1.8);
 	};
+
 
 	var calcToCFloat = function(temp){
 		return ((temp - 32)/1.8);
@@ -63,7 +64,7 @@
 		}
 		else {
 			temperature = parseFloat(temperature);
-			celciusConvertionOutput.innerHTML = waterState(temperature) + enter() + 'At this temperature we have ' + seasonFromTemp(temperature) + '.' + enter() + calcToF(temperature) + enter() + celciusConvertionOutput.innerHTML;
+			celciusConvertionOutput.innerHTML = waterState(temperature) + enter() + 'At this temperature we have ' + seasonFromTemp(temperature) + '.' + enter() + 'Your temperature in Celsius is '+ temperature +' in Fahrenheit is '+ calcToF(temperature) + '!' +  enter() + celciusConvertionOutput.innerHTML;
 		}
 	}); 
 
@@ -76,7 +77,7 @@
 		}
 		else {
 			var tempInC = calcToCFloat(parseFloat(temperature));
-			fahrenheitConvertionOutput.innerHTML = waterStategi(tempInC) + enter() + 'At this temperature we have ' + seasonFromTemp(tempInC) + '.' + enter() + calcToC(temperature) + enter() + fahrenheitConvertionOutput.innerHTML;
+			fahrenheitConvertionOutput.innerHTML = waterState(tempInC) + enter() + 'At this temperature we have ' + seasonFromTemp(tempInC) + '.' + enter() + 'Your temperature in Fahrenheit is '+ temperature +' in Celsius is ' + calcToC(temperature) + '!' + enter() + fahrenheitConvertionOutput.innerHTML;
 		}
 	}); 
 })();
